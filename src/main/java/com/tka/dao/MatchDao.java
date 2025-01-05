@@ -6,6 +6,7 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -39,6 +40,30 @@ public class MatchDao {
 	public List<Matches> getAllMatches() {
 		Session session = sessionFactory.openSession();
 		TypedQuery<Matches> query = session.createQuery("FROM Matches", Matches.class);
+//		sessionFactory.close();
 		return query.getResultList();
 	}
+
+	public List<Matches> getMatchByDate(String date) {
+		Session session = sessionFactory.openSession();
+		List<Matches> matches = null;
+		try {
+			// HQL query to get matches by date
+			String hql = "FROM Matches m WHERE m.matchDate = :date";
+
+			// Create the query and set the parameter
+			Query<Matches> query = session.createQuery(hql, Matches.class);
+			query.setParameter("date", date); // assuming date is in format "yyyy-MM-dd"
+
+			// Execute the query and get the results
+			matches = query.list();
+		} catch (Exception e) {
+			e.printStackTrace(); // Log error (you can use a logger here)
+		} finally {
+			session.close(); // Always close the session
+		}
+
+		return matches; // Return the list of matches
+	}
+
 }

@@ -26,4 +26,7 @@ public class MatchService {
 	public List<Matches> getAllMatches() {
 		return matchDao.getAllMatches();
 	}
+public List<Matches> getMatchByDate(){
+	return matchDao.getMatchByDate("");
+}
 }
