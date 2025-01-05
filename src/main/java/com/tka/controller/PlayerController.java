@@ -19,7 +19,7 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Player createPlayer(@RequestBody Player player) {
         return playerService.createPlayer(player);
     }
@@ -29,7 +29,7 @@ public class PlayerController {
         return playerService.getPlayerById(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }

@@ -19,7 +19,7 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Matches createMatch(@RequestBody Matches matches) {
         return matchService.createMatch(matches);
     }
@@ -29,7 +29,7 @@ public class MatchController {
         return matchService.getMatchById(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Matches> getAllMatches() {
         return matchService.getAllMatches();
     }

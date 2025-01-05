@@ -2,7 +2,8 @@ package com.tka.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,26 @@ public class MatchDao {
 
 	public Matches save(Matches matches) {
 		Session session = sessionFactory.openSession();
-		session.save(matches);
+		session.beginTransaction();
+		session.saveOrUpdate(matches); // Use save instead of saveOrUpdate
+		session.getTransaction().commit(); // Commit the transaction
 		return matches;
 	}
 
 	public Matches findById(Long id) {
 		Session session = sessionFactory.openSession();
-		return session.get(Matches.class, id);
+		Matches matches = session.get(Matches.class, id);
+
+		if (matches != null) {
+			return matches; // Return the Match if found
+		} else {
+			throw new RuntimeException("Team with ID: " + id + " not found"); // Return a message if not found
+		}
 	}
 
-	public List<Matches> findAll() {
+	public List<Matches> getAllMatches() {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Matches.class);
-		return criteria.list();
+		TypedQuery<Matches> query = session.createQuery("FROM Matches", Matches.class);
+		return query.getResultList();
 	}
 }
