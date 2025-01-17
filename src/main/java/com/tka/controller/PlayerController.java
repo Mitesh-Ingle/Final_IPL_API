@@ -1,3 +1,4 @@
+
 package com.tka.controller;
 import java.util.List;
 
@@ -32,5 +33,6 @@ public class PlayerController {
     @GetMapping("/all")
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
+        
     }
 }
