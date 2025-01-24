@@ -19,7 +19,7 @@ public class TeamService {
 	}
 
 	public Team getTeamById(Long id) {
-		return teamDao.findById(id);
+		return (Team) teamDao.findById(id);
 
 	}
 

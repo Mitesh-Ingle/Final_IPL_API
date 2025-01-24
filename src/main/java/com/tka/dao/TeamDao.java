@@ -24,14 +24,14 @@ public class TeamDao {
 		return team;
 	}
 
-	public Team findById(Long id) {
+	public Object findById(Long id) {
 		Session session = sessionFactory.openSession();
 		Team team = session.get(Team.class, id);
 
 		if (team != null) {
 			return team; // Return the team if found
 		} else {
-			throw new RuntimeException("Team with ID: " + id + " not found"); // Return a message if not found
+			return "Team with ID: " + id + " not found"; // Return a message if not found
 		}
 	}
 
